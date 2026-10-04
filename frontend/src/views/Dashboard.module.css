@@ -1,0 +1,122 @@
+.stats,.statsMore{
+  display:grid;
+  gap:14px;
+  margin-bottom:16px
+}
+.stats{
+  grid-template-columns:repeat(4,minmax(0,1fr))
+}
+.statsMore{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  margin-bottom:22px
+}
+.stat{
+  color:inherit;
+  display:block;
+  min-width:0
+}
+.stat strong{
+  display:block;
+  font-size:30px;
+  margin-top:4px;
+  color:var(--text)
+}
+.stat span{
+  color:var(--muted);
+  font-size:13px;
+  text-transform:capitalize
+}
+.accent{
+  border-top:3px solid var(--brand)
+}
+.columns{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px
+}
+.cardHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:8px
+}
+.cardHead h3{
+  font-size:16px
+}
+.empty{
+  color:var(--muted);
+  margin:8px 0 0
+}
+.row{
+  display:grid;
+  grid-template-columns:minmax(0,1.4fr) auto minmax(0,.9fr);
+  gap:10px;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  color:inherit
+}
+.row:last-child{
+  border:0
+}
+.row:hover strong{
+  color:var(--brand)
+}
+.row strong{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.meta{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+.when{
+  text-align:right;
+  font-size:13px;
+  color:var(--text)
+}
+.when span{
+  display:block
+}
+.late{
+  color:var(--danger);
+  font-weight:600
+}
+.item{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  flex-wrap:wrap
+}
+.item:last-child{
+  border:0
+}
+.detail{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px
+}
+.detail dt{
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase
+}
+.detail dd{
+  margin:2px 0 0;
+  font-weight:500
+}
+@media(max-width:900px){.stats,.columns{grid-template-columns:1fr 1fr}.statsMore{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:640px){
+  .stats,.statsMore,.columns,.detail{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr auto;gap:6px 10px}
+  .when{grid-column:1/-1;text-align:left}
+}

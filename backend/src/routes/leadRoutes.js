@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const c = require('../controllers/leadController');
+const { protect, authorize } = require('../middleware/auth');
+const { validate, leadSchema } = require('../middleware/validate');
+router.use(protect);
+router.get('/stats', c.stats);
+router.get('/reminders', c.reminders);
+router.route('/').get(c.list).post(validate(leadSchema), c.create);
+router.route('/:id').get(c.get).put(validate(leadSchema), c.update).delete(authorize('admin'), c.remove);
+module.exports = router;

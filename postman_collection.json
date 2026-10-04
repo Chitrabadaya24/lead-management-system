@@ -1,0 +1,209 @@
+{
+  "info": {
+    "name": "Lead Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "leadId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"New User\",\n  \"email\": \"new@pharmacy.com\",\n  \"password\": \"Secret123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/login",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@pharmacy.com\",\n  \"password\": \"Admin@123\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.set('token', pm.response.json().token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Me",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/auth/me"
+      }
+    },
+    {
+      "name": "Users",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/users"
+      }
+    },
+    {
+      "name": "List leads",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/leads?page=1&limit=10&search=&status=&leadSource=&assignedTo=&sortBy=nextFollowUpDate&order=asc"
+      }
+    },
+    {
+      "name": "Create lead",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/leads",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"leadName\": \"Test Lead\",\n  \"contactNumber\": \"9876543210\",\n  \"email\": \"test@example.com\",\n  \"status\": \"follow-up\",\n  \"leadSource\": \"walk-in\",\n  \"nextFollowUpDate\": \"2026-10-10\",\n  \"nextFollowUpTime\": \"11:00\",\n  \"leadNotes\": \"Call back\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.collectionVariables.set('leadId', pm.response.json().data._id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get lead",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/leads/{{leadId}}"
+      }
+    },
+    {
+      "name": "Update lead",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/leads/{{leadId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"leadName\": \"Test Lead\",\n  \"contactNumber\": \"9876543210\",\n  \"email\": \"test@example.com\",\n  \"status\": \"converted\",\n  \"leadSource\": \"walk-in\",\n  \"nextFollowUpDate\": \"2026-10-10\",\n  \"nextFollowUpTime\": \"11:00\",\n  \"leadNotes\": \"Call back\",\n  \"customerType\": \"regular\",\n  \"medicalNeeds\": \"BP medication\",\n  \"purchaseHistory\": [\n    {\n      \"item\": \"Amlodipine\",\n      \"amount\": 120,\n      \"date\": \"2026-10-03\"\n    }\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Stats",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/leads/stats"
+      }
+    },
+    {
+      "name": "Reminders",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/leads/reminders"
+      }
+    },
+    {
+      "name": "Delete lead (admin)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/leads/{{leadId}}"
+      }
+    }
+  ]
+}
